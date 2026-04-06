@@ -1,13 +1,13 @@
 # Group Chat application using Python TCP sockets
 
 Info:
-A simple group chat that can handle multiple users with raw TCP sockets and pythons "threading" module. 
-Rules:
-Unable to use SocketIO, no external dependencies outside of Pythons standard library.
+- A simple group chat that can handle multiple users with raw TCP sockets and pythons "threading" module. 
+- Rules:
+- Unable to use SocketIO, no external dependencies outside of Pythons standard library.
 ---
 ## Files:
-server.py - chat server which runs on a dedicated host
-client.py - chat client which runs on each participant's machine
+- server.py - chat server which runs on a dedicated host
+- client.py - chat client which runs on each participant's machine
 ---
 ## How-To use application:
 
