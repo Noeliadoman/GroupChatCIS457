@@ -32,7 +32,7 @@ class Server:
         client_socket = client['client_socket']
         while True:
             client_message = client_socket.recv(1024).decode()
-            if client_message.strip() == client_name + ": bye" or not client_message.strip():
+            if client_message.strip() == client_name + ": exit" or not client_message.strip():
                 self.broadcast_message(client_name, client_name + " has left the chat")
                 Server.Clients.remove(client)
                 client_socket.close()
@@ -45,13 +45,13 @@ class Server:
             client_name = client['client_name']
             if client_name != sender_name:
                 try:
-                client_socket.send(message.encode())
-            except:
-                client_socket.close()
-                if client in self.Clients:
-                    self.Clients.remove(client)
+                    client_socket.send(message.encode())
+                except:
+                    client_socket.close()
+                    if client in self.Clients:
+                        self.Clients.remove(client)
 
 if __name__ == '__main__':
-    server = Server('127.0.0.1', 7632)
+    server = Server('127.0.0.1', 5000)
     server.listen()
     
