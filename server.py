@@ -31,7 +31,13 @@ class Server:
         client_name = client['client_name']
         client_socket = client['client_socket']
         while True:
-            client_message = client_socket.recv(1024).decode()
+            try:
+                client_message = client_socket.recv(1024).decode()
+            except:
+                self.broadcast_message(client_name, client_name + " disconnected unexpectedly")
+                Server.Clients.remove(client)
+                client_socket.close()
+                break
             if client_message.strip() == client_name + ": bye" or not client_message.strip():
                 self.broadcast_message(client_name, client_name + " has left the chat")
                 Server.Clients.remove(client)
