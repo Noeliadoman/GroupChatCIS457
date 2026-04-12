@@ -21,7 +21,7 @@ class Server:
             client_socket, address = self.socket.accept()
             print("Connection from: " + str(address))
 
-            client_name = client_socket.recv(1024).decode()
+            client_name = client_socket.recv(1024).decode().strip()
             client = {'client_name': client_name, 'client_socket': client_socket}
             self.broadcast_message(client_name, client_name + " has joined the chat")
             Server.Clients.append(client)
@@ -31,13 +31,7 @@ class Server:
         client_name = client['client_name']
         client_socket = client['client_socket']
         while True:
-            try:
-                client_message = client_socket.recv(1024).decode()
-            except:
-                self.broadcast_message(client_name, client_name + " disconnected unexpectedly")
-                Server.Clients.remove(client)
-                client_socket.close()
-                break
+            client_message = client_socket.recv(1024).decode()
             if client_message.strip() == client_name + ": bye" or not client_message.strip():
                 self.broadcast_message(client_name, client_name + " has left the chat")
                 Server.Clients.remove(client)
@@ -50,7 +44,12 @@ class Server:
             client_socket = client['client_socket']
             client_name = client['client_name']
             if client_name != sender_name:
+                try:
                 client_socket.send(message.encode())
+            except:
+                client_socket.close()
+                if client in self.Clients:
+                    self.Clients.remove(client)
 
 if __name__ == '__main__':
     server = Server('127.0.0.1', 7632)
