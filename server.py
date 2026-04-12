@@ -19,13 +19,13 @@ class Server:
     def listen(self):
         while True:
             client_socket, address = self.socket.accept()
-            print("Connection from: " + str({address}))
+            print("Connection from: " + str(address))
 
             client_name = client_socket.recv(1024).decode()
             client = {'client_name': client_name, 'client_socket': client_socket}
             self.broadcast_message(client_name, client_name + " has joined the chat")
-            self.Clients.append(client)
-            Thread(target = self.handle_new_client, args = {client}).start()
+            Server.Clients.append(client)
+            Thread(target = self.handle_new_client, args = (client,)).start()
 
     def handle_new_client(self, client):
         client_name = client['client_name']
@@ -49,4 +49,4 @@ class Server:
 if __name__ == '__main__':
     server = Server('127.0.0.1', 7632)
     server.listen()
-    server.listen()
+    
