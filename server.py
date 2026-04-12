@@ -13,7 +13,7 @@ class Server:
     def __init__(self, HOST, PORT):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket.bind((HOST, PORT))
-        self.socket.listen(5)
+        self.socket.listen(100)
         print('Server waiting for connection...')
 
     def listen(self):
