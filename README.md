@@ -9,10 +9,15 @@ Info:
 - server.py - chat server which runs on a dedicated host
 - client.py - chat client which runs on each participant's machine
 ---
-## Overall Design of Chat Server
+# Overall Design of Chat Server
 
-### 1. Purpose
+### Purpose
 The chat server is responsible for managing multiple client connections simultaneously, receiving messages from connected clients, and broadcasting those messages to all other active clients in real time.
+#### Data Strcutures
+Self.clients - list of dict - holds one entry per active client.
+self.lock - threading.Lock - prevents when threads can add or remove clients simultaneously.
+self.socket - socket.socket - server's TCP listening socket.
+client dict - {'client_name': str, 'client_socket': socket}  
 
 ### Chat Server Design
 The server is implemented as a single python class that owns the listening socket, the shared client list anda  threading socket. A new thread is created for each connected client, allowing the server to handle multiple clients. 
