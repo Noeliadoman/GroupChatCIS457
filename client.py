@@ -28,11 +28,11 @@ class Client:
     def send_message(self):
         while True:
             try:
-                client_input = input("")
+                client_input = input(f"{self.name}: ")
                 client_message = self.name + ": " + client_input
                 self.socket.send(client_message.encode())
             except (ConnectionError, OSError):
-                print("Connection lost. Exiting gracefully.")
+                print("\nConnection lost. Exiting gracefully.")
                 self.socket.close()
                 os._exit(0)
     # Will forever listen out for messages. If the message is empty, close the program. 
