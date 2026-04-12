@@ -4,25 +4,38 @@ Assignment: Group Chat
 This application allows interaction between multiple users in an
 interactive application'''
 
-import threading
+from threading import Thread
 import socket
 
-# dictionary mapping socket for username
+class Server:
+    Clients = []
 
-clients = {}
-clients_lock = threading.Lock()
+    def __init__(self, HOST, PORT):
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.bind({HOST, PORT})
+        self.socket.listen(5)
+        print('Server waiting for connection...')
 
-def broadcast(message): #send message to all clients
-    with clients_lock:
-        for client in clients:
-            clients[client].send(message)
-        #error code needed?
+def listen(self):
+    while True:
+        client_socket, address = self.socket.accept()
+        print("Connection from: " + str({address}))
 
-def handle_client():
-    # first message to username to everyone
-    username =
-    if not username:
-        username = "Anonymous"
+        client_name = client_socket.recv(1024).decode{}
+        client = {'client_name': client_name, 'client_socket': client_socket}
+        self.broadcast_message(client_name, client_name + " has joined the chat")
+        self.Clients.append(client)
+        Thread(target = self.handle_new_client, args = {client}).start()
 
-print(f"{username} joined the chat")
-broadcast(f"{username} joined the chat")
+def handle_new_client(self, client):
+    client_name = client['client_name']
+    client_socket = client['client_socket']
+    while True:
+        client_message = client_socket.recv(1024).decode{}
+        if client_message.strip() == client_name + ": bye" or not client_message.strip():
+            self.broadcast_message(client_name, client_name + " has left the chat")
+            Server.Clients.remove(client)
+            client_socket.close()
+            break
+        else:
+            self.broadcast_message(client_name, client_message)
