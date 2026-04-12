@@ -42,7 +42,9 @@ class Client:
                 server_message = self.socket.recv(1024).decode()
                 if not server_message.strip():
                     os._exit(0)
-                print(server_message)
+                print("\r" + " " * 100, end="")
+                print("\r" + server_message)
+                print(f"{self.name}: ", end="", flush=True)
             except (ConnectionError, OSError):
                 print("Server has shut down. Exiting gracefully.")
                 self.socket.close()
