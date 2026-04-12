@@ -2,7 +2,7 @@
 
 Info:
 - A simple group chat that can handle multiple users with raw TCP sockets and pythons "threading" module. 
-- Rules:
+Rules:
 - Unable to use SocketIO, no external dependencies outside of Pythons standard library.
 ---
 ## Files:
